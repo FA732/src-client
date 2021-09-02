@@ -5,7 +5,10 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+//This Class is the DAO, where you can create a entity and manipulate the date or information of DB H2, could be a specific table using 
+//@Table (name ="name of table") or only a new table using @Entity.
+//You cannot create a entity without a tag called @Id or @Column(name="name of column id"),as a consequence,table will not be recognized 
+//by the @Entity or @Bean in Springboot.
 @Entity
 public class Cliente {
 	@Id

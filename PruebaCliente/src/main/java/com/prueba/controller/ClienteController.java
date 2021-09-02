@@ -15,7 +15,12 @@ import com.prueba.entity.Cliente;
 import com.prueba.exceptions.ErrorMessageClient;
 import com.prueba.repository.IClientRepository;
 
-
+//This class controller is esencial to make client's request,create a client by the method PostMapping "newClient()" where the object 
+//is instanced with new parameters obtained in Postman.
+//the method "getallClients" searchs on the repository JPA to find all clients stored on H2.
+//method "findClient" search a specific client, only writing a existing id. if is not, throws a exception where the message says "Client Not Found or not Exist!, id:(id written) "
+//method "DeleteClient" is similar to findclient with one different function, delete an existing client.
+//method "getChangeClient" searchs on the repository JPA an existing client, if client not exists,create a new one. Otherwise modify the value of parameters you give in Postman or Unit test. 
 @RestController
 public class ClienteController{
 
@@ -23,24 +28,24 @@ public class ClienteController{
 	IClientRepository cli;
 	
 	@GetMapping("/client")
-	  List<Cliente> all() {
+	 public List<Cliente> getAllClients() {
 	    return cli.findAll();
 	  }
 	  
 	  @PostMapping("/client")
-	  Cliente newClient(@RequestBody Cliente newClient) {
+	  public Cliente newClient(@RequestBody Cliente newClient) {
 	    return cli.save(newClient);
 	  }
 	 
 	  @GetMapping("/client/{id}")
-	  Cliente findClient(@PathVariable Long id) {
+	  public Cliente findClient(@PathVariable Long id) {
 	    
 	    return cli.findById(id)
 	      .orElseThrow(() -> new ErrorMessageClient(id));
 	  }
 
 	  @PutMapping("/client/{id}")
-	  Cliente ModifyClient(@RequestBody Cliente newClient, @PathVariable Long id) {
+	  public Cliente getChangeClient(@RequestBody Cliente newClient, @PathVariable Long id) {
 	    
 	    return cli.findById(id)
 	      .map(cliente -> {
@@ -57,7 +62,7 @@ public class ClienteController{
 	  }
 
 	  @DeleteMapping("/client/{id}")
-	  void deleteEmployee(@PathVariable Long id) {
+	  public void deleteClient(@PathVariable Long id) {
 	    cli.deleteById(id);
 	  }
 }
